@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Indicadores · BSC · PESI</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0d0f;
+    --surface: #16161a;
+    --surface2: #1e1e24;
+    --border: rgba(255,255,255,0.07);
+    --text: #f0efe8;
+    --muted: #8a8a92;
+    --accent: #c8f060;
+    --accent2: #60d0f0;
+    --accent3: #f060a8;
+    --accent4: #f0a840;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+  h1,h2,h3,h4 { font-family: 'Syne', sans-serif; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    position: relative;
+    padding: 6rem 2rem 4rem;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 20% 30%, rgba(200,240,96,0.08) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 60% at 80% 70%, rgba(96,208,240,0.07) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 50% 50%, rgba(240,96,168,0.04) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    mask-image: radial-gradient(ellipse 80% 80% at center, black 40%, transparent 100%);
+  }
+  .hero-inner { position: relative; text-align: center; max-width: 780px; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(200,240,96,0.08);
+    border: 1px solid rgba(200,240,96,0.2);
+    border-radius: 100px;
+    padding: 6px 16px;
+    font-size: 12px; font-weight: 500; letter-spacing: 0.08em;
+    color: var(--accent);
+    margin-bottom: 2rem;
+    animation: fadeUp 0.6s ease both;
+  }
+  .hero-badge::before { content: '●'; font-size: 8px; animation: pulse 2s ease-in-out infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+  .hero h1 {
+    font-size: clamp(2.8rem, 6vw, 5rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    animation: fadeUp 0.6s ease 0.1s both;
+  }
+  .hero h1 em {
+    font-style: normal;
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    background-image: linear-gradient(135deg, var(--accent), var(--accent2));
+  }
+  .hero-sub {
+    margin-top: 1.2rem;
+    font-size: 1.05rem;
+    color: var(--muted);
+    max-width: 520px;
+    margin-inline: auto;
+    animation: fadeUp 0.6s ease 0.2s both;
+  }
+  .hero-quote {
+    margin-top: 2.5rem;
+    padding: 1rem 1.5rem;
+    border-left: 2px solid var(--accent4);
+    text-align: left;
+    display: inline-block;
+    animation: fadeUp 0.6s ease 0.35s both;
+  }
+  .hero-quote p { font-style: italic; color: var(--muted); font-size: 14px; }
+  .hero-quote span { font-size: 12px; color: rgba(255,255,255,0.25); margin-top: 4px; display: block; }
+  .hero-scroll {
+    position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    font-size: 11px; letter-spacing: 0.1em; color: var(--muted);
+    animation: fadeUp 0.6s ease 0.5s both;
+  }
+  .hero-scroll-line {
+    width: 1px; height: 40px;
+    background: linear-gradient(to bottom, var(--accent), transparent);
+    animation: scrollLine 2s ease-in-out infinite;
+  }
+  @keyframes scrollLine { 0%,100%{opacity:0.3;transform:scaleY(1)} 50%{opacity:1;transform:scaleY(1.1)} }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+
+  /* LAYOUT */
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+  section { padding: 5rem 0; }
+
+  /* SECTION LABELS */
+  .section-label {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.12em;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+  }
+  .section-label::before {
+    content: '';
+    width: 24px; height: 1px;
+    background: currentColor;
+  }
+  .section-h {
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.5rem;
+  }
+  .section-desc {
+    color: var(--muted);
+    font-size: 15px;
+    max-width: 500px;
+    margin-bottom: 3rem;
+  }
+
+  /* DIVIDER */
+  .divider { height: 1px; background: var(--border); }
+
+  /* CONCEPT CARDS (base & strategy) */
+  .cards-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .cards-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .card:hover { border-color: rgba(255,255,255,0.14); transform: translateY(-3px); }
+  .card-tag {
+    font-size: 10px; font-weight: 600; letter-spacing: 0.1em;
+    padding: 4px 10px; border-radius: 100px;
+    display: inline-block; margin-bottom: 1rem;
+  }
+  .tag-green { background: rgba(200,240,96,0.12); color: var(--accent); }
+  .tag-blue  { background: rgba(96,208,240,0.12); color: var(--accent2); }
+  .tag-pink  { background: rgba(240,96,168,0.12); color: var(--accent3); }
+  .tag-amber { background: rgba(240,168,64,0.12); color: var(--accent4); }
+  .card h3 { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
+  .card p { font-size: 13.5px; color: var(--muted); line-height: 1.6; }
+
+  /* INDICATOR LEVELS */
+  .levels { display: grid; gap: 0; }
+  .level {
+    display: grid; grid-template-columns: 180px 1fr auto;
+    align-items: center; gap: 2rem;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .level:last-child { border-bottom: none; }
+  .level-name { font-family: 'Syne', sans-serif; font-weight: 600; font-size: 15px; }
+  .level-desc { color: var(--muted); font-size: 13.5px; }
+  .level-pills { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+  .level-pill {
+    font-size: 11px; padding: 4px 10px; border-radius: 100px;
+    border: 1px solid var(--border); color: var(--muted);
+    white-space: nowrap;
+  }
+
+  /* BSC PERSPECTIVES FLOW */
+  .persp-flow {
+    display: flex; align-items: stretch; gap: 0;
+    margin-bottom: 2.5rem;
+    border: 1px solid var(--border);
+    border-radius: 16px; overflow: hidden;
+  }
+  .persp {
+    flex: 1; padding: 1.5rem 1.2rem;
+    border-right: 1px solid var(--border);
+    transition: background 0.3s;
+    position: relative;
+  }
+  .persp:last-child { border-right: none; }
+  .persp:hover { background: var(--surface2); }
+  .persp-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 2rem; font-weight: 800;
+    opacity: 0.08; line-height: 1;
+    margin-bottom: 6px;
+  }
+  .persp-title { font-weight: 600; font-size: 14px; margin-bottom: 6px; }
+  .persp-body { font-size: 12px; color: var(--muted); line-height: 1.5; }
+  .persp-arrow {
+    position: absolute; right: -10px; top: 50%; transform: translateY(-50%);
+    width: 18px; height: 18px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; color: var(--muted); z-index: 2;
+  }
+  .persp:last-child .persp-arrow { display: none; }
+
+  /* BSC STEPS */
+  .steps { display: grid; gap: 12px; }
+  .step {
+    display: flex; align-items: flex-start; gap: 1rem;
+    padding: 1.2rem 1.4rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    transition: border-color 0.3s, background 0.3s;
+  }
+  .step:hover { background: var(--surface2); border-color: rgba(255,255,255,0.12); }
+  .step-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px; font-weight: 700;
+    width: 28px; height: 28px; min-width: 28px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid var(--border);
+    color: var(--muted);
+  }
+  .step-content h4 { font-size: 14px; font-weight: 600; margin-bottom: 3px; }
+  .step-content p  { font-size: 13px; color: var(--muted); }
+
+  /* FODA */
+  .foda { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; border-radius: 16px; overflow: hidden; }
+  .foda-cell {
+    padding: 1.5rem;
+    background: var(--surface);
+    transition: background 0.3s;
+  }
+  .foda-cell:hover { background: var(--surface2); }
+  .foda-cell h4 { font-size: 13px; font-weight: 600; margin-bottom: 10px; }
+  .foda-cell ul { list-style: none; }
+  .foda-cell ul li { font-size: 12.5px; color: var(--muted); padding: 3px 0; display: flex; gap: 8px; align-items: flex-start; }
+  .foda-cell ul li::before { content: '—'; opacity: 0.3; flex-shrink: 0; }
+
+  /* PESI */
+  .pesi-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .pesi-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .pesi-card:hover { border-color: rgba(255,255,255,0.14); transform: translateY(-3px); }
+  .pesi-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  }
+  .pesi-card.c1::before { background: var(--accent); }
+  .pesi-card.c2::before { background: var(--accent2); }
+  .pesi-card.c3::before { background: var(--accent4); }
+  .pesi-icon {
+    font-size: 1.5rem; margin-bottom: 1rem;
+    width: 44px; height: 44px;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--surface2);
+    border-radius: 12px;
+  }
+  .pesi-card h3 { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+  .pesi-card p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 3rem 0;
+    text-align: center;
+  }
+  footer p { font-size: 13px; color: var(--muted); }
+  footer strong { color: var(--text); font-weight: 500; }
+
+  /* SCROLL ANIMATIONS */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 768px) {
+    .cards-2, .cards-3, .pesi-cards { grid-template-columns: 1fr; }
+    .persp-flow { flex-direction: column; }
+    .persp { border-right: none; border-bottom: 1px solid var(--border); }
+    .persp:last-child { border-bottom: none; }
+    .persp-arrow { display: none; }
+    .level { grid-template-columns: 1fr; gap: 8px; }
+    .level-pills { justify-content: flex-start; }
+    .foda { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <div class="hero-badge">Planeamiento Estratégico de las TICs</div>
+    <h1>Indicadores · <em>BSC</em> · PESI</h1>
+    <p class="hero-sub">Resumen visual de los conceptos clave de la sesión sobre gestión estratégica, Balanced Scorecard y Planificación de Sistemas de Información.</p>
+    <div class="hero-quote">
+      <p>"Lo que no se mide, no se puede mejorar."</p>
+      <span>— Peter Drucker</span>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="hero-scroll-line"></div>
+    SCROLL
+  </div>
+</section>
+
+<!-- CONCEPTOS BASE -->
+<section>
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label">Conceptos fundamentales</div>
+      <h2 class="section-h">Estrategia y Gestión</h2>
+      <p class="section-desc">Todo plan estratégico parte de entender qué es la estrategia y cómo se gestiona.</p>
+    </div>
+    <div class="cards-2 reveal">
+      <div class="card">
+        <span class="card-tag tag-green">Estrategia</span>
+        <h3>Patrón de comportamiento distintivo</h3>
+        <p>Define cómo la organización es percibida en su sector frente a clientes, competidores, proveedores y complementadores. Para fines prácticos: <strong>Estrategia = Plan Estratégico</strong>.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag tag-blue">Gestión</span>
+        <h3>Planeamiento + Control</h3>
+        <p>El control implica <strong>evaluar el estado del plan</strong> y definir acciones correctivas y preventivas. La gestión opera en dos niveles: estratégica (largo plazo) y operacional (ejecución diaria).</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- INDICADORES -->
+<section>
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label">Tipología</div>
+      <h2 class="section-h">Clasificación de Indicadores</h2>
+      <p class="section-desc">Los indicadores se organizan según el nivel organizacional y el tipo de planificación y control que ejercen.</p>
+    </div>
+    <div class="levels reveal">
+      <div class="level">
+        <div>
+          <div class="section-label" style="margin-bottom:4px">Alta Dirección</div>
+          <div class="level-name">Estratégicos</div>
+        </div>
+        <div class="level-desc">Planificación estratégica global. Miden el resultado final o impacto de la organización a largo plazo.</div>
+        <div class="level-pills">
+          <span class="level-pill">Resultado final</span>
+          <span class="level-pill">Impacto</span>
+          <span class="level-pill">Intermedio</span>
+        </div>
+      </div>
+      <div class="level">
+        <div>
+          <div class="section-label" style="margin-bottom:4px">Nivel Directivo</div>
+          <div class="level-name">Por responsabilidad</div>
+        </div>
+        <div class="level-desc">Control de gestión por centro de responsabilidad. Evalúan el desempeño de unidades específicas.</div>
+        <div class="level-pills">
+          <span class="level-pill">Eficiencia</span>
+          <span class="level-pill">Eficacia</span>
+          <span class="level-pill">Economía</span>
+          <span class="level-pill">Calidad</span>
+        </div>
+      </div>
+      <div class="level">
+        <div>
+          <div class="section-label" style="margin-bottom:4px">Nivel Operativo</div>
+          <div class="level-name">Operacionales</div>
+        </div>
+        <div class="level-desc">Control de actividades. Miden los insumos y productos del proceso productivo en tiempo real.</div>
+        <div class="level-pills">
+          <span class="level-pill">Insumos</span>
+          <span class="level-pill">Productos</span>
+          <span class="level-pill">Eficacia</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- BSC PERSPECTIVAS -->
+<section>
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label">Balanced Scorecard</div>
+      <h2 class="section-h">Las 4 Perspectivas del BSC</h2>
+      <p class="section-desc">El BSC convierte la estrategia en un sistema integrado con una secuencia de influencia clara: las perspectivas inductoras impulsan los efectos.</p>
+    </div>
+    <div class="persp-flow reveal">
+      <div class="persp">
+        <div class="persp-num">01</div>
+        <div class="card-tag tag-pink" style="margin-bottom:8px">Inductor</div>
+        <div class="persp-title">Personas y Aprendizaje</div>
+        <div class="persp-body">Capital humano · Capital de información · Capital organizativo. Habilidades, sistemas y cultura.</div>
+        <div class="persp-arrow">›</div>
+      </div>
+      <div class="persp">
+        <div class="persp-num">02</div>
+        <div class="card-tag tag-amber" style="margin-bottom:8px">Inductor</div>
+        <div class="persp-title">Procesos Internos</div>
+        <div class="persp-body">Gestión de operaciones · Clientes · Innovación · Procesos regulatorios y sociales.</div>
+        <div class="persp-arrow">›</div>
+      </div>
+      <div class="persp">
+        <div class="persp-num">03</div>
+        <div class="card-tag tag-blue" style="margin-bottom:8px">Efecto</div>
+        <div class="persp-title">Clientes</div>
+        <div class="persp-body">Propuesta de valor: precio, calidad, disponibilidad, funcionalidad, servicio, marca.</div>
+        <div class="persp-arrow">›</div>
+      </div>
+      <div class="persp">
+        <div class="persp-num">04</div>
+        <div class="card-tag tag-green" style="margin-bottom:8px">Efecto final</div>
+        <div class="persp-title">Finanzas</div>
+        <div class="persp-body">Valor sostenible para accionistas. Productividad y crecimiento en ingresos como estrategias base.</div>
+      </div>
+    </div>
+    <div class="cards-3 reveal">
+      <div class="card">
+        <span class="card-tag tag-green">Mapa estratégico</span>
+        <h3>Cadenas Causa-Efecto</h3>
+        <p>Cada relación entre objetivos es una hipótesis. Se verifica o descarta al cerrar los ciclos de control (gestión).</p>
+      </div>
+      <div class="card">
+        <span class="card-tag tag-blue">Herramienta dual</span>
+        <h3>Lenguaje + Mecanismo</h3>
+        <p>El BSC modela y comunica la estrategia, y luego controla su avance a partir de la evaluación de resultados.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag tag-pink">Análisis FODA</span>
+        <h3>Punto de partida</h3>
+        <p>El análisis interno (fortalezas/debilidades) y externo (oportunidades/amenazas) es el paso 1 del diseño del BSC.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PASOS BSC -->
+<section>
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label">Metodología</div>
+      <h2 class="section-h">6 Pasos para diseñar el BSC</h2>
+      <p class="section-desc">Metodología de Howard Rhom, basada en la técnica de Kaplan y Norton.</p>
+    </div>
+    <div class="steps reveal">
+      <div class="step"><div class="step-num">01</div><div class="step-content"><h4>Análisis de la situación actual</h4><p>FODA: fortalezas, oportunidades, debilidades y amenazas de la organización.</p></div></div>
+      <div class="step"><div class="step-num">02</div><div class="step-content"><h4>Desarrollo de la estrategia general de negocio</h4><p>Definir los objetivos y la dirección estratégica de la organización.</p></div></div>
+      <div class="step"><div class="step-num">03</div><div class="step-content"><h4>Descomposición en Factores Críticos de Éxito</h4><p>Identificar los FCE que determinarán el logro de la estrategia.</p></div></div>
+      <div class="step"><div class="step-num">04</div><div class="step-content"><h4>Creación del mapa estratégico</h4><p>Alinear la estrategia con los objetivos a través de relaciones causa-efecto.</p></div></div>
+      <div class="step"><div class="step-num">05</div><div class="step-content"><h4>Tablero de gestión y control</h4><p>Definir indicadores, métricas y metas para cada objetivo estratégico.</p></div></div>
+      <div class="step"><div class="step-num">06</div><div class="step-content"><h4>Identificación y diseño de nuevas iniciativas</h4><p>Proyectos e iniciativas que cierra la brecha entre la situación actual y la meta.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PESI -->
+<section>
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label">PESI</div>
+      <h2 class="section-h">Planificación Estratégica de los SI</h2>
+      <p class="section-desc">Hoja de ruta para alinear la tecnología de información con los objetivos estratégicos de la organización.</p>
+    </div>
+    <div class="pesi-cards reveal">
+      <div class="pesi-card c1">
+        <div class="pesi-icon">🗺️</div>
+        <h3>Hoja de ruta TI</h3>
+        <p>El PESI alinea la inversión en tecnología con los objetivos generales de la organización. Es complejo y requiere cuidado técnico y organizacional.</p>
+      </div>
+      <div class="pesi-card c2">
+        <div class="pesi-icon">📊</div>
+        <h3>Beneficios clave</h3>
+        <p>Eficiencia operativa, capacidad de innovación y ventaja competitiva sostenible. Asegura que la inversión en TI impulse el éxito organizacional.</p>
+      </div>
+      <div class="pesi-card c3">
+        <div class="pesi-icon">🧩</div>
+        <h3>WBS — Alcance</h3>
+        <p>Work Breakdown Structure: descomposición del proyecto en entregables o fases para dimensionar tiempo y costo de forma precisa.</p>
+      </div>
+    </div>
+    <div class="card reveal" style="margin-top:16px; border-color: rgba(200,240,96,0.15);">
+      <span class="card-tag tag-green">Dimensiones del PESI</span>
+      <div style="display:flex; gap: 2rem; flex-wrap:wrap; margin-top: 0.5rem;">
+        <div><h4 style="font-size:13px;margin-bottom:4px">Técnica</h4><p style="font-size:13px">Contenidos, arquitectura de sistemas, infraestructura tecnológica.</p></div>
+        <div><h4 style="font-size:13px;margin-bottom:4px">Organizacional</h4><p style="font-size:13px">Gestión del cambio, comunicación, gestión de expectativas.</p></div>
+        <div><h4 style="font-size:13px;margin-bottom:4px">Humana</h4><p style="font-size:13px">Involucramiento de directivos, usuarios y equipos de TI.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONCLUSION -->
+<section style="padding: 4rem 0;">
+  <div class="container">
+    <div class="cards-3 reveal">
+      <div class="card" style="border-color: rgba(200,240,96,0.2);">
+        <span class="card-tag tag-green">Conclusión 1</span>
+        <h3>Indicadores de gestión</h3>
+        <p>Permiten medir y evaluar el desempeño organizacional en todos los niveles: estratégico, directivo y operativo.</p>
+      </div>
+      <div class="card" style="border-color: rgba(96,208,240,0.2);">
+        <span class="card-tag tag-blue">Conclusión 2</span>
+        <h3>BSC — Visión integral</h3>
+        <p>Equilibra indicadores financieros y no financieros para mejorar la eficiencia, competitividad y sostenibilidad a largo plazo.</p>
+      </div>
+      <div class="card" style="border-color: rgba(240,168,64,0.2);">
+        <span class="card-tag tag-amber">Conclusión 3</span>
+        <h3>PESI — Uso estratégico de TI</h3>
+        <p>Orienta la tecnología como palanca estratégica, no solo como soporte operativo, generando ventaja competitiva real.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p>Planeamiento Estratégico de las TICs · <strong>Dra. Ing. Carmen Cecilia Torres Ceclén</strong></p>
+    <p style="margin-top:6px">Universidad Tecnológica del Perú</p>
+  </div>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        const delay = Array.from(e.target.parentElement.children).indexOf(e.target) * 80;
+        setTimeout(() => e.target.classList.add('visible'), delay);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
