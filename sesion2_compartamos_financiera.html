@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sesión 1 – Diagnóstico Estratégico TI | Compartamos Financiera</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --rojo: #C0392B;
+    --rojo-oscuro: #922B21;
+    --rojo-claro: #F5B7B1;
+    --dorado: #D4A017;
+    --dorado-claro: #F9E79F;
+    --gris-oscuro: #1A1A2E;
+    --gris-medio: #2C2C54;
+    --gris-claro: #F4F6F8;
+    --blanco: #FFFFFF;
+    --texto: #212121;
+    --borde: #E8E8E8;
+    --verde: #1A7A4A;
+    --azul: #1565C0;
+    --naranja: #E67E22;
+    --shadow: 0 4px 20px rgba(0,0,0,0.10);
+    --shadow-fuerte: 0 8px 32px rgba(0,0,0,0.18);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--gris-claro);
+    color: var(--texto);
+    line-height: 1.6;
+  }
+
+  /* ===== PORTADA ===== */
+  .portada {
+    background: linear-gradient(135deg, var(--gris-oscuro) 0%, var(--gris-medio) 60%, #16213E 100%);
+    color: var(--blanco);
+    padding: 60px 50px 50px;
+    position: relative;
+    overflow: hidden;
+    page-break-after: always;
+  }
+  .portada::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 340px; height: 340px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(192,57,43,0.35), transparent 70%);
+  }
+  .portada::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; left: 40px;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(212,160,23,0.20), transparent 70%);
+  }
+  .portada-header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-bottom: 50px;
+    position: relative; z-index: 1;
+  }
+  .logo-utp {
+    background: var(--rojo);
+    color: white;
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 900;
+    padding: 10px 20px;
+    border-radius: 4px;
+    letter-spacing: 2px;
+  }
+  .curso-tag {
+    background: rgba(255,255,255,0.10);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 20px;
+    padding: 6px 16px;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--dorado-claro);
+  }
+  .portada-titulo {
+    position: relative; z-index: 1;
+    margin-bottom: 30px;
+  }
+  .portada-titulo .sesion-label {
+    display: inline-block;
+    background: var(--rojo);
+    color: white;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 3px;
+    margin-bottom: 18px;
+  }
+  .portada-titulo h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 42px;
+    font-weight: 900;
+    line-height: 1.15;
+    color: white;
+    margin-bottom: 10px;
+  }
+  .portada-titulo h1 span { color: var(--dorado); }
+  .portada-titulo .subtitulo {
+    font-size: 16px;
+    color: rgba(255,255,255,0.65);
+    font-weight: 300;
+    margin-top: 12px;
+  }
+  .portada-divider {
+    width: 80px; height: 4px;
+    background: linear-gradient(90deg, var(--rojo), var(--dorado));
+    border-radius: 2px;
+    margin: 20px 0;
+  }
+  .portada-meta {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    position: relative; z-index: 1;
+    margin-top: 40px;
+  }
+  .meta-card {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.13);
+    border-radius: 10px;
+    padding: 16px 20px;
+  }
+  .meta-card .label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: rgba(255,255,255,0.45);
+    margin-bottom: 5px;
+  }
+  .meta-card .valor {
+    font-size: 14px;
+    font-weight: 500;
+    color: white;
+  }
+
+  /* ===== CONTENIDO PRINCIPAL ===== */
+  .contenido {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 50px 30px;
+  }
+
+  /* ===== SECCIÓN ===== */
+  .seccion {
+    background: white;
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+    margin-bottom: 40px;
+    overflow: hidden;
+  }
+  .seccion-header {
+    background: linear-gradient(90deg, var(--gris-oscuro), var(--gris-medio));
+    color: white;
+    padding: 20px 32px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .seccion-header .num {
+    background: var(--rojo);
+    color: white;
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 900;
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .seccion-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+  }
+  .seccion-header h2 small {
+    display: block;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.55);
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+  }
+  .seccion-body { padding: 32px; }
+
+  /* ===== FICHA INSTITUCIONAL ===== */
+  .ficha-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border: 1px solid var(--borde);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .ficha-item {
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--borde);
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .ficha-item:nth-child(odd) { border-right: 1px solid var(--borde); }
+  .ficha-item:nth-last-child(-n+2) { border-bottom: none; }
+  .ficha-item .fi-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: #888;
+    font-weight: 600;
+    min-width: 110px;
+    margin-top: 2px;
+  }
+  .ficha-item .fi-valor {
+    font-size: 14px;
+    color: var(--texto);
+    font-weight: 500;
+    flex: 1;
+  }
+  .ficha-item .fi-valor strong { color: var(--rojo); }
+  .ficha-full {
+    grid-column: 1 / -1;
+    border-right: none !important;
+  }
+  .badge {
+    display: inline-block;
+    background: var(--rojo-claro);
+    color: var(--rojo-oscuro);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 10px;
+    border-radius: 12px;
+    margin: 2px 3px 2px 0;
+  }
+  .badge.verde { background: #D5F5E3; color: var(--verde); }
+  .badge.azul { background: #D6EAF8; color: var(--azul); }
+  .badge.dorado { background: var(--dorado-claro); color: #7D6608; }
+
+  /* ===== INFO BOX ===== */
+  .info-box {
+    background: #FEF9E7;
+    border-left: 4px solid var(--dorado);
+    border-radius: 0 8px 8px 0;
+    padding: 14px 20px;
+    margin-bottom: 22px;
+    font-size: 13.5px;
+    color: #5D4037;
+  }
+
+  /* ===== MAPA DE PROCESOS ===== */
+  .mapa-procesos {
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  /* Capa superior: Procesos Estratégicos */
+  .capa-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+    margin-top: 10px;
+  }
+  .capa-label .cl-bar {
+    width: 5px; height: 32px;
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+  .capa-label h3 {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+  }
+  .capa-label p {
+    font-size: 11px;
+    color: #888;
+    margin-top: 1px;
+  }
+
+  /* Proceso estratégico */
+  .grid-estrategico {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+  .proc-card {
+    border-radius: 10px;
+    padding: 16px 14px;
+    text-align: center;
+    position: relative;
+    transition: transform 0.18s, box-shadow 0.18s;
+  }
+  .proc-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-fuerte); }
+  .proc-card .icon {
+    font-size: 26px;
+    margin-bottom: 8px;
+    display: block;
+  }
+  .proc-card .proc-title {
+    font-size: 12.5px;
+    font-weight: 700;
+    margin-bottom: 5px;
+    line-height: 1.3;
+  }
+  .proc-card .proc-desc {
+    font-size: 10.5px;
+    line-height: 1.4;
+    opacity: 0.80;
+  }
+
+  /* Estratégicos */
+  .estrat { background: linear-gradient(135deg, #1A1A2E, #2C2C54); color: white; }
+
+  /* Core / Clave */
+  .grid-core {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+  .core { background: linear-gradient(135deg, #922B21, #C0392B); color: white; }
+
+  /* Soporte */
+  .grid-soporte {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .soporte { background: linear-gradient(135deg, #145A32, #1A7A4A); color: white; }
+
+  /* Flechas de flujo */
+  .flujo-arrow {
+    text-align: center;
+    margin: 4px 0 16px;
+    color: #CCC;
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .flujo-arrow::before,
+  .flujo-arrow::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #DDD, transparent);
+  }
+
+  /* Cliente en el centro */
+  .cliente-centro {
+    background: linear-gradient(135deg, var(--dorado) 0%, #E67E22 100%);
+    color: white;
+    border-radius: 12px;
+    padding: 16px 24px;
+    text-align: center;
+    margin: 10px 0 28px;
+    font-size: 13px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    box-shadow: 0 4px 15px rgba(212,160,23,0.35);
+  }
+  .cliente-centro .big-icon { font-size: 28px; }
+
+  /* Leyenda */
+  .leyenda {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+    padding-top: 18px;
+    border-top: 1px solid var(--borde);
+    flex-wrap: wrap;
+  }
+  .leyenda-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: #555;
+  }
+  .leyenda-dot {
+    width: 14px; height: 14px;
+    border-radius: 3px;
+  }
+
+  /* SI actual */
+  .si-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .si-table th {
+    background: var(--gris-oscuro);
+    color: white;
+    padding: 10px 14px;
+    text-align: left;
+    font-size: 11px;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+  }
+  .si-table th:first-child { border-radius: 8px 0 0 0; }
+  .si-table th:last-child { border-radius: 0 8px 0 0; }
+  .si-table td {
+    padding: 11px 14px;
+    border-bottom: 1px solid var(--borde);
+    vertical-align: middle;
+  }
+  .si-table tr:hover td { background: #FAFAFA; }
+  .si-table tr:last-child td { border-bottom: none; }
+  .estado {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .estado.activo { background: #D5F5E3; color: #145A32; }
+  .estado.basico { background: #FEF9E7; color: #7D6608; }
+  .estado.limitado { background: #FDEDEC; color: #922B21; }
+
+  /* Footer */
+  .footer {
+    background: var(--gris-oscuro);
+    color: rgba(255,255,255,0.55);
+    text-align: center;
+    padding: 28px;
+    font-size: 12px;
+    margin-top: 20px;
+  }
+  .footer strong { color: rgba(255,255,255,0.85); }
+
+  /* Nota aclaratoria */
+  .nota {
+    background: #EBF5FB;
+    border-left: 4px solid var(--azul);
+    border-radius: 0 8px 8px 0;
+    padding: 12px 18px;
+    font-size: 12.5px;
+    color: #1A5276;
+    margin-top: 20px;
+  }
+
+  @media print {
+    body { background: white; }
+    .contenido { padding: 20px; }
+    .seccion { box-shadow: none; border: 1px solid #DDD; }
+    .portada { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+
+<!-- PORTADA -->
+<div class="portada">
+  <div class="portada-header">
+    <div class="curso-tag">Planeamiento Estratégico de las TIC's</div>
+  </div>
+  <div class="portada-titulo">
+    <span class="sesion-label">Unidad 1 · Semana 1 · Sesión 1</span>
+    <h1>La Empresa como Sistema<br>y el <span>Diagnóstico Estratégico TI</span></h1>
+    <div class="portada-divider"></div>
+    <p class="subtitulo">Empresa analizada: <strong style="color:white;">Compartamos Financiera S.A.</strong> — Institución Microfinanciera | Grupo Gentera</p>
+  </div>
+  <div class="portada-meta">
+    <div class="meta-card">
+      <div class="label">Producto entregable</div>
+      <div class="valor">Ficha Institucional + Mapa de Procesos + Inventario SI</div>
+    </div>
+    <div class="meta-card">
+      <div class="label">Fecha</div>
+      <div class="valor">Abril 2026</div>
+    </div>
+    <div class="meta-card">
+      <div class="label">Región de análisis</div>
+      <div class="valor">Áncash, Perú (con cobertura nacional)</div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTENIDO -->
+<div class="contenido">
+
+  <!-- ===== FICHA INSTITUCIONAL ===== -->
+  <div class="seccion">
+    <div class="seccion-header">
+      <div class="num">1</div>
+      <h2><small>Producto Entregable A</small>Ficha Institucional de la Empresa</h2>
+    </div>
+    <div class="seccion-body">
+
+      <div class="info-box">
+        📌 <strong>Nota:</strong> A partir de enero 2025 la SBS autorizó la conversión de Compartamos Financiera a banco, pasando a denominarse <em>Compartamos Banco S.A.</em> Para este análisis se toma como referencia su operación como <strong>Financiera</strong> al cierre del ejercicio 2024, que es el período inmediato anterior a dicha conversión.
+      </div>
+
+      <div class="ficha-grid">
+        <div class="ficha-item">
+          <span class="fi-label">Razón Social</span>
+          <span class="fi-valor"><strong>Compartamos Financiera S.A.</strong></span>
+        </div>
+        <div class="ficha-item">
+          <span class="fi-label">RUC</span>
+          <span class="fi-valor">20369155360</span>
+        </div>
+        <div class="ficha-item">
+          <span class="fi-label">Nombre Comercial</span>
+          <span class="fi-valor">Compartamos Financiera (hoy Compartamos Banco)</span>
+        </div>
+        <div class="ficha-item">
+          <span class="fi-label">Tipo Empresa</span>
+          <span class="fi-valor">Sociedad Anónima — Empresa Financiera no estatal de derecho privado</span>
+        </div>
+        <div class="ficha-item">
+          <span class="fi-label">Sector</span>
+          <span class="fi-valor">
+            <span class="badge azul">Sector Financiero</span>
+            <span class="badge">Microfinanzas</span>
+            <span class="badge">Intermediación Monetaria</span>
+          </span>
+        </div>
+        <div class="ficha-item">
+          <span class="fi-label">Tamaño</span>
+          <span class="fi-valor"><span class="badge verde">Grande</span> — más de 7,000 colaboradores a nivel nacional</span>
+        </div>
+        <div class="ficha-item">
+          <span class="fi-label">Sede Principal</span>
+          <span class="fi-valor">Av. Paseo de la República 5895, Piso 13, Miraflores, Lima</span>
+        </div>
+        <div class="ficha-item">
+          <span class="fi-label">Cobertura Áncash</span>
+          <span class="fi-valor">Agencias en Huaraz, Chimbote, Huarmey, Casma y otras provincias ancashinas</span>
+        </div>
+        <div class="ficha-item">
+          <span class="fi-label">N° de Colaboradores</span>
+          <span class="fi-valor"><strong>+7,000</strong> colaboradores a nivel nacional (2024); TOP 10 GPTW Perú</span>
+        </div>
+        <div class="ficha-item">
+          <span class="fi-label">N° de Agencias</span>
+          <span class="fi-valor"><strong>126 agencias</strong> en 23 regiones del Perú</span>
+        </div>
+        <div class="ficha-item">
+          <span class="fi-label">Inicio Operaciones</span>
+          <span class="fi-valor">1998 (como Edpyme Crear Arequipa); desde 2009 como Financiera; desde 2025 como Banco</span>
+        </div>
+        <div class="ficha-item">
+          <span class="fi-label">Grupo Económico</span>
+          <span class="fi-valor"><strong>Gentera S.A.B. de C.V.</strong> (México) — accionista mayoritario desde 2011</span>
+        </div>
+        <div class="ficha-item">
+          <span class="fi-label">Supervisión</span>
+          <span class="fi-valor">Superintendencia de Banca, Seguros y AFP (SBS) — Autorizada para captar depósitos</span>
+        </div>
+        <div class="ficha-item">
+          <span class="fi-label">N° de Clientes</span>
+          <span class="fi-valor"><strong>1.2 millones</strong> de clientes de crédito activos (cierre 2024)</span>
+        </div>
+        <div class="ficha-item ficha-full">
+          <span class="fi-label">Mercado Objetivo</span>
+          <span class="fi-valor">
+            Microempresarios y pequeños empresarios de sectores urbano-rurales;
+            <span class="badge">Mujeres emprendedoras</span>
+            <span class="badge azul">Microempresa (MES)</span>
+            <span class="badge verde">Pequeña empresa</span>
+            <span class="badge dorado">Comercio informal</span>
+            con énfasis en población de baja renta y segmentos no bancarizados de regiones como Áncash, Lima, Arequipa y otras 20 regiones.
+          </span>
+        </div>
+        <div class="ficha-item ficha-full">
+          <span class="fi-label">Principales Productos / Servicios</span>
+          <span class="fi-valor">
+            <span class="badge">Crédito Individual (MYPE)</span>
+            <span class="badge rojo">Crédito Grupal – "Súper Mujer"</span>
+            <span class="badge azul">Cuenta de Ahorro</span>
+            <span class="badge verde">Seguro de Desgravamen</span>
+            <span class="badge dorado">Seguro de Vida</span>
+            <span class="badge">Medios de Pago Digitales</span>
+            <span class="badge azul">Educación Financiera</span>
+          </span>
+        </div>
+        <div class="ficha-item">
+          <span class="fi-label">Capital Social</span>
+          <span class="fi-valor">S/ 749,670,135.76 (cierre 2024)</span>
+        </div>
+        <div class="ficha-item">
+          <span class="fi-label">Propósito</span>
+          <span class="fi-valor"><em>"Erradicar la exclusión financiera, generando valor económico, humano y social"</em></span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== MAPA DE PROCESOS ===== -->
+  <div class="seccion">
+    <div class="seccion-header">
+      <div class="num">2</div>
+      <h2><small>Producto Entregable B</small>Mapa de Procesos de la Empresa</h2>
+    </div>
+    <div class="seccion-body">
+
+      <div class="mapa-procesos">
+
+        <!-- PROCESOS ESTRATÉGICOS -->
+        <div class="capa-label">
+          <div class="cl-bar" style="background: linear-gradient(180deg, #1A1A2E, #2C2C54);"></div>
+          <div>
+            <h3 style="color: #1A1A2E;">Procesos Estratégicos</h3>
+            <p>Dirigen y orientan el rumbo de la organización. Generan políticas, objetivos y lineamientos.</p>
+          </div>
+        </div>
+        <div class="grid-estrategico">
+          <div class="proc-card estrat">
+            <span class="icon">🎯</span>
+            <div class="proc-title">Planeamiento Estratégico</div>
+            <div class="proc-desc">Definición de misión, visión, objetivos y planes de expansión</div>
+          </div>
+          <div class="proc-card estrat">
+            <span class="icon">📋</span>
+            <div class="proc-title">Gobierno Corporativo</div>
+            <div class="proc-desc">Directorio, políticas corporativas y cumplimiento normativo SBS</div>
+          </div>
+          <div class="proc-card estrat">
+            <span class="icon">⚖️</span>
+            <div class="proc-title">Gestión de Riesgos</div>
+            <div class="proc-desc">Riesgo crediticio, operacional, de mercado y cumplimiento regulatorio</div>
+          </div>
+          <div class="proc-card estrat">
+            <span class="icon">📣</span>
+            <div class="proc-title">Marketing Estratégico</div>
+            <div class="proc-desc">Estrategia de marca, segmentación e inclusión financiera</div>
+          </div>
+        </div>
+
+        <!-- FLECHA -->
+        <div class="flujo-arrow">▼ Dirección y orientación estratégica ▼</div>
+
+        <!-- CLIENTE AL CENTRO -->
+        <div class="cliente-centro">
+          <span class="big-icon">👥</span>
+          <div>
+            <strong>CLIENTE EN EL CENTRO</strong><br>
+            <span style="font-size:12px; font-weight:400;">Microempresario · Mujer emprendedora · Pequeño negocio · Segmento no bancarizado</span>
+          </div>
+          <span class="big-icon">👥</span>
+        </div>
+
+        <!-- PROCESOS CLAVE -->
+        <div class="capa-label">
+          <div class="cl-bar" style="background: linear-gradient(180deg, #922B21, #C0392B);"></div>
+          <div>
+            <h3 style="color: #922B21;">Procesos Clave (Core)</h3>
+            <p>Generan valor directo al cliente. Son la razón de ser del negocio microfinanciero.</p>
+          </div>
+        </div>
+        <div class="grid-core">
+          <div class="proc-card core">
+            <span class="icon">🔍</span>
+            <div class="proc-title">Promoción y Captación de Clientes</div>
+            <div class="proc-desc">Prospección, visita de campo, campañas, referidos</div>
+          </div>
+          <div class="proc-card core">
+            <span class="icon">📄</span>
+            <div class="proc-title">Evaluación y Análisis Crediticio</div>
+            <div class="proc-desc">Análisis de capacidad de pago, scoring, visita al negocio</div>
+          </div>
+          <div class="proc-card core">
+            <span class="icon">💰</span>
+            <div class="proc-title">Desembolso de Créditos</div>
+            <div class="proc-desc">Aprobación, firma de contrato, transferencia o efectivo</div>
+          </div>
+          <div class="proc-card core">
+            <span class="icon">📅</span>
+            <div class="proc-title">Gestión de Cobranzas</div>
+            <div class="proc-desc">Seguimiento de pagos, recuperación, refinanciamiento</div>
+          </div>
+          <div class="proc-card core">
+            <span class="icon">🏦</span>
+            <div class="proc-title">Captación de Depósitos y Ahorros</div>
+            <div class="proc-desc">Apertura de cuentas, depósitos voluntarios, cuenta "Súper Mujer"</div>
+          </div>
+        </div>
+
+        <!-- FLECHA -->
+        <div class="flujo-arrow">▲ Soporte y habilitación operativa ▲</div>
+
+        <!-- PROCESOS DE SOPORTE -->
+        <div class="capa-label">
+          <div class="cl-bar" style="background: linear-gradient(180deg, #145A32, #1A7A4A);"></div>
+          <div>
+            <h3 style="color: #145A32;">Procesos de Soporte</h3>
+            <p>Brindan los recursos, infraestructura y condiciones para que los procesos clave funcionen.</p>
+          </div>
+        </div>
+        <div class="grid-soporte">
+          <div class="proc-card soporte">
+            <span class="icon">💻</span>
+            <div class="proc-title">Gestión de TI y Sistemas</div>
+            <div class="proc-desc">Infraestructura, sistemas core, seguridad informática</div>
+          </div>
+          <div class="proc-card soporte">
+            <span class="icon">👤</span>
+            <div class="proc-title">Gestión de Personas (RRHH)</div>
+            <div class="proc-desc">Selección, capacitación, bienestar, compensaciones</div>
+          </div>
+          <div class="proc-card soporte">
+            <span class="icon">🧾</span>
+            <div class="proc-title">Contabilidad y Finanzas</div>
+            <div class="proc-desc">Reportes SBS, EEFF, tesorería, presupuesto</div>
+          </div>
+          <div class="proc-card soporte">
+            <span class="icon">⚙️</span>
+            <div class="proc-title">Operaciones y Logística</div>
+            <div class="proc-desc">Gestión de agencias, materiales, caja y bóvedas</div>
+          </div>
+          <div class="proc-card soporte">
+            <span class="icon">🛡️</span>
+            <div class="proc-title">Auditoría Interna y Cumplimiento</div>
+            <div class="proc-desc">Control interno, LAFT, prevención de fraude</div>
+          </div>
+          <div class="proc-card soporte">
+            <span class="icon">⚖️</span>
+            <div class="proc-title">Asesoría Legal</div>
+            <div class="proc-desc">Contratos, litigios, normativa, regulación SBS-SMV</div>
+          </div>
+        </div>
+
+        <!-- LEYENDA -->
+        <div class="leyenda">
+          <div class="leyenda-item">
+            <div class="leyenda-dot" style="background: linear-gradient(135deg, #1A1A2E, #2C2C54);"></div>
+            <span><strong>Procesos Estratégicos</strong> — orientan y definen el rumbo</span>
+          </div>
+          <div class="leyenda-item">
+            <div class="leyenda-dot" style="background: linear-gradient(135deg, #922B21, #C0392B);"></div>
+            <span><strong>Procesos Clave (Core)</strong> — generan valor al cliente</span>
+          </div>
+          <div class="leyenda-item">
+            <div class="leyenda-dot" style="background: linear-gradient(135deg, #145A32, #1A7A4A);"></div>
+            <span><strong>Procesos de Soporte</strong> — habilitan la operación</span>
+          </div>
+          <div class="leyenda-item">
+            <div class="leyenda-dot" style="background: linear-gradient(135deg, var(--dorado), #E67E22);"></div>
+            <span><strong>Cliente</strong> — eje central del modelo de negocio</span>
+          </div>
+        </div>
+
+      </div><!-- fin mapa-procesos -->
+    </div>
+  </div>
+
+  <!-- ===== INVENTARIO SI ACTUAL ===== -->
+  <div class="seccion">
+    <div class="seccion-header">
+      <div class="num">3</div>
+      <h2><small>Producto Entregable C</small>Inventario de Sistemas de Información Actuales (AS-IS)</h2>
+    </div>
+    <div class="seccion-body">
+
+      <div class="info-box">
+        💡 <strong>Nota metodológica:</strong> El inventario se construye en base a información pública disponible (memorias anuales, reportes SBS, reporte de sostenibilidad 2024) y a prácticas estándar del sector microfinanciero peruano. Para profundidad de detalle se recomienda complementar con entrevistas al área de TI de la agencia local.
+      </div>
+
+      <table class="si-table">
+        <thead>
+          <tr>
+            <th>Sistema / Herramienta</th>
+            <th>Tipo</th>
+            <th>Proceso que soporta</th>
+            <th>Área usuaria</th>
+            <th>Estado</th>
+            <th>Observación</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Core Bancario / Financiero</strong><br><small style="color:#888;">Sistema propietario o adaptado (p.ej. Bantotal, Temenos T24 o similar)</small></td>
+            <td><span class="badge azul">Core Banking</span></td>
+            <td>Gestión de créditos, ahorros, desembolso, cobranzas</td>
+            <td>Operaciones, Agencias</td>
+            <td><span class="estado activo">Activo</span></td>
+            <td>Sistema central de la operación; integra módulos de crédito individual y grupal</td>
+          </tr>
+          <tr>
+            <td><strong>Sistema de Evaluación Crediticia</strong><br><small style="color:#888;">Módulo de scoring y análisis de riesgo</small></td>
+            <td><span class="badge">Scoring / Riesgo</span></td>
+            <td>Evaluación y análisis crediticio</td>
+            <td>Créditos, Riesgos</td>
+            <td><span class="estado activo">Activo</span></td>
+            <td>Incluye variables de campo; puede integrar bureaus (Equifax, Sentinel)</td>
+          </tr>
+          <tr>
+            <td><strong>Aplicativo Móvil de Asesores</strong><br><small style="color:#888;">App tablet/smartphone para asesor de campo</small></td>
+            <td><span class="badge dorado">App Móvil</span></td>
+            <td>Promoción, evaluación en campo, cobranzas</td>
+            <td>Fuerza de ventas</td>
+            <td><span class="estado activo">Activo</span></td>
+            <td>Permite digitalizar visitas y solicitudes fuera de agencia</td>
+          </tr>
+          <tr>
+            <td><strong>Portal / App Cliente "Compartamos"</strong><br><small style="color:#888;">Canal digital para clientes</small></td>
+            <td><span class="badge azul">Banca Digital</span></td>
+            <td>Consultas, pagos, solicitudes de crédito digital</td>
+            <td>Clientes / Canal digital</td>
+            <td><span class="estado activo">Activo</span></td>
+            <td>Integrado con BIM (Pagos Digitales Peruanos); en expansión</td>
+          </tr>
+          <tr>
+            <td><strong>Sistema Contable / ERP Financiero</strong><br><small style="color:#888;">Módulo de contabilidad general y EEFF</small></td>
+            <td><span class="badge">ERP / Contable</span></td>
+            <td>Contabilidad, reportes SBS, EEFF, tesorería</td>
+            <td>Finanzas y Contabilidad</td>
+            <td><span class="estado activo">Activo</span></td>
+            <td>Genera reportes regulatorios para la SBS mensualmente</td>
+          </tr>
+          <tr>
+            <td><strong>Sistema de Gestión de RRHH</strong><br><small style="color:#888;">Módulo de planillas, asistencia, capacitación</small></td>
+            <td><span class="badge verde">RRHH</span></td>
+            <td>Gestión de personas, nómina, bienestar</td>
+            <td>Gestión de Personas</td>
+            <td><span class="estado activo">Activo</span></td>
+            <td>Cubre +7,000 colaboradores; puede integrar plataformas LMS para capacitación</td>
+          </tr>
+          <tr>
+            <td><strong>Plataforma de BI / Reportería</strong><br><small style="color:#888;">Dashboards de gestión y KPIs</small></td>
+            <td><span class="badge dorado">BI / Analytics</span></td>
+            <td>Planeamiento, control de cartera, toma de decisiones</td>
+            <td>Gerencias, Planeamiento</td>
+            <td><span class="estado basico">Básico</span></td>
+            <td>Reportes en desarrollo; oportunidad de mejora con BI avanzado</td>
+          </tr>
+          <tr>
+            <td><strong>Hojas de Cálculo (Excel)</strong><br><small style="color:#888;">MS Excel / Google Sheets</small></td>
+            <td><span class="badge">Ofimática</span></td>
+            <td>Análisis ad hoc, reportes locales de agencia, seguimiento</td>
+            <td>Diversas áreas</td>
+            <td><span class="estado limitado">Limitado</span></td>
+            <td>Uso intensivo en agencias; genera silos de datos y riesgo de inconsistencia</td>
+          </tr>
+          <tr>
+            <td><strong>Sistema de Gestión de Riesgos / LAFT</strong><br><small style="color:#888;">Prevención de lavado de activos y financiamiento del terrorismo</small></td>
+            <td><span class="badge azul">Compliance</span></td>
+            <td>Cumplimiento normativo, auditoría, prevención de fraude</td>
+            <td>Cumplimiento, Auditoría Interna</td>
+            <td><span class="estado activo">Activo</span></td>
+            <td>Exigencia regulatoria SBS; monitorea transacciones inusuales</td>
+          </tr>
+          <tr>
+            <td><strong>Plataforma de Comunicación Interna</strong><br><small style="color:#888;">Intranet, correo corporativo, Microsoft Teams o similar</small></td>
+            <td><span class="badge verde">Colaboración</span></td>
+            <td>Comunicación interna, coordinación entre agencias</td>
+            <td>Todas las áreas</td>
+            <td><span class="estado basico">Básico</span></td>
+            <td>Área de mejora para sedes remotas en regiones como Áncash</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="nota">
+        📊 <strong>Brecha TI identificada (preliminar):</strong> Se observa dependencia de hojas de cálculo para gestión local de agencias; oportunidad de consolidar BI avanzado y fortalecer la plataforma digital para clientes en zonas como Áncash. Esta brecha se analizará en profundidad en la Sesión 4 (Tabla de Brechas AS-IS vs TO-BE).
+      </div>
+
+    </div>
+  </div>
+
+</div><!-- fin contenido -->
+
+<div class="footer">
+  <strong>Compartamos Financiera S.A.</strong> · Diagnóstico Estratégico TI — Sesión 1<br>
+  Planeamiento Estratégico de las TIC's · Universidad Tecnológica del Perú · 2026<br>
+  <em style="font-size:11px;">Documento elaborado con fines académicos. Fuentes: SBS, Memorias Anuales Compartamos 2022–2024, Reporte de Sostenibilidad 2024, Great Place to Work Perú.</em>
+</div>
+
+</body>
+</html>
